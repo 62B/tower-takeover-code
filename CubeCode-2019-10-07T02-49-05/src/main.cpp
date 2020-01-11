@@ -33,7 +33,7 @@
 
 
 //MAIN CODE
-#include "vex.h"
+ #include "vex.h"
  
  using namespace vex;
 
@@ -47,7 +47,7 @@ void shortBrake()
     Flipper2.stop(vex::brakeType::brake);
     Arm.stop(vex::brakeType::brake);
     Tray.stop(vex::brakeType::brake);
-    vex::task::sleep(200);
+    vex::task::sleep(100);
 }
 
 void trayForward(int num){
@@ -60,8 +60,18 @@ void trayBackward(int num){
   vex::task::sleep(num);
 }
 
+void trayBackwardFast(int num){
+  Tray.spin(vex::directionType::rev, 180, vex::velocityUnits::pct);
+  vex::task::sleep(num);
+}
+
 void armsUp(int num){
   Arm.spin(vex::directionType::fwd, 120, vex::velocityUnits::pct);
+  vex::task::sleep(num);
+}
+
+void armsUpFast(int num){
+  Arm.spin(vex::directionType::fwd, 240, vex::velocityUnits::pct);
   vex::task::sleep(num);
 }
 
@@ -76,10 +86,10 @@ void fdrive (int num)
     LeftMotor2.resetRotation();
     RightMotor.resetRotation();
     RightMotor2.resetRotation();
-    RightMotor.startRotateTo(num,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
-    LeftMotor.startRotateTo(num,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
-    RightMotor2.startRotateTo(num,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
-    LeftMotor2.rotateTo(num,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
+    RightMotor.startRotateTo(num,vex::rotationUnits::deg,240,vex::velocityUnits::rpm);
+    LeftMotor.startRotateTo(num,vex::rotationUnits::deg,240,vex::velocityUnits::rpm);
+    RightMotor2.startRotateTo(num,vex::rotationUnits::deg,240,vex::velocityUnits::rpm);
+    LeftMotor2.rotateTo(num,vex::rotationUnits::deg,240,vex::velocityUnits::rpm);
 }
 
 void fdriveslow (int num)
@@ -102,12 +112,39 @@ void fdriveintake (int num)
     RightMotor2.resetRotation();
     Flipper1.resetRotation();
     Flipper2.resetRotation();
-    RightMotor.startRotateTo(num,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
-    LeftMotor.startRotateTo(num,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
-    RightMotor2.startRotateTo(num,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
-    LeftMotor2.startRotateTo(num,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
+    RightMotor.startRotateTo(num,vex::rotationUnits::deg,80,vex::velocityUnits::rpm);
+    LeftMotor.startRotateTo(num,vex::rotationUnits::deg,80,vex::velocityUnits::rpm);
+    RightMotor2.startRotateTo(num,vex::rotationUnits::deg,80,vex::velocityUnits::rpm);
+    LeftMotor2.startRotateTo(num,vex::rotationUnits::deg,80,vex::velocityUnits::rpm);
     Flipper1.startRotateTo(num*-2,vex::rotationUnits::deg,240,vex::velocityUnits::rpm);
     Flipper2.rotateTo(num*-2,vex::rotationUnits::deg,240,vex::velocityUnits::rpm);
+}
+
+void bdriveintake (int num)
+{
+    LeftMotor.resetRotation();
+    LeftMotor2.resetRotation();
+    RightMotor.resetRotation();
+    RightMotor2.resetRotation();
+    Flipper1.resetRotation();
+    Flipper2.resetRotation();
+    RightMotor.startRotateTo(-num,vex::rotationUnits::deg,80,vex::velocityUnits::rpm);
+    LeftMotor.startRotateTo(-num,vex::rotationUnits::deg,80,vex::velocityUnits::rpm);
+    RightMotor2.startRotateTo(-num,vex::rotationUnits::deg,80,vex::velocityUnits::rpm);
+    LeftMotor2.startRotateTo(-num,vex::rotationUnits::deg,80,vex::velocityUnits::rpm);
+    Flipper1.startRotateTo(num*-2,vex::rotationUnits::deg,240,vex::velocityUnits::rpm);
+    Flipper2.rotateTo(num*-2,vex::rotationUnits::deg,240,vex::velocityUnits::rpm);
+}
+
+void brakeintake (int num)
+{
+    LeftMotor.stop(vex::brakeType::brake);
+    LeftMotor2.stop(vex::brakeType::brake);
+    RightMotor.stop(vex::brakeType::brake);
+    RightMotor2.stop(vex::brakeType::brake);
+    Flipper1.spin(vex::directionType::rev, 240, vex::velocityUnits::pct);
+    Flipper2.spin(vex::directionType::rev, 240, vex::velocityUnits::pct);
+    vex::task::sleep(num);
 }
 
 
@@ -130,9 +167,9 @@ void rturn ()
     RightMotor.resetRotation();
     RightMotor2.resetRotation();
     LeftMotor.startRotateTo(295,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
-    LeftMotor2.rotateTo(295,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
+    LeftMotor2.startRotateTo(295,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
     RightMotor.startRotateTo(-295,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
-    RightMotor2.startRotateTo(-295,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
+    RightMotor2.rotateTo(-295,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
 }
 
 void lturn ()
@@ -142,9 +179,9 @@ void lturn ()
     RightMotor.resetRotation();
     RightMotor2.resetRotation();
     LeftMotor.startRotateTo(-295,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
-    LeftMotor2.rotateTo(-295,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
+    LeftMotor2.startRotateTo(-295,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
     RightMotor.startRotateTo(295,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
-    RightMotor2.startRotateTo(295,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
+    RightMotor2.rotateTo(295,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
 }
 
 void rturnNum (int num)
@@ -154,9 +191,9 @@ void rturnNum (int num)
     RightMotor.resetRotation();
     RightMotor2.resetRotation();
     LeftMotor.startRotateTo(num,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
-    LeftMotor2.rotateTo(num,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
+    LeftMotor2.startRotateTo(num,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
     RightMotor.startRotateTo(-num,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
-    RightMotor2.startRotateTo(-num,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
+    RightMotor2.rotateTo(-num,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
 }
 
 void lturnNum (int num)
@@ -166,9 +203,9 @@ void lturnNum (int num)
     RightMotor.resetRotation();
     RightMotor2.resetRotation();
     LeftMotor.startRotateTo(-num,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
-    LeftMotor2.rotateTo(-num,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
+    LeftMotor2.startRotateTo(-num,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
     RightMotor.startRotateTo(num,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
-    RightMotor2.startRotateTo(num,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
+    RightMotor2.rotateTo(num,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
 }
 
  void brakeIt()
@@ -192,10 +229,10 @@ void lturnNum (int num)
 
  void autonomous( void ) {
 
-
+//Deploy
 trayForward(1000);
 shortBrake();
-armsUp(1500);
+armsUpFast(1000);
 shortBrake();
 armsDown(750);
 shortBrake();
@@ -203,20 +240,21 @@ trayBackward(1000);
 shortBrake();
 armsDown(200);
 shortBrake();
-bdrive(550);
-brakeIt();
-fdriveslow(550);
-brakeIt();
+fdriveintake(1500);
+shortBrake();
+brakeintake(700);
+shortBrake();
+bdriveintake(1000);
+shortBrake();
+rturnNum(375);
+shortBrake();
+trayForward(50);
+shortBrake();
+fdrive(150);
+shortBrake();
 
-/*
-fdriveintake(1000);
-brakeIt();
-rturnNum(450);
-brakeIt();
-fdrive(750);
-brakeIt();
 
-*/
+
 //deload function
 
 

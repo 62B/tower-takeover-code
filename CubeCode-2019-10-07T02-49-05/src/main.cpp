@@ -201,6 +201,18 @@ void brakeouttake (int num)
     vex::task::sleep(num);
 }
 
+//Robot brakes and outtakes for num milliseconds.
+void brakeouttslow (int num)
+{
+    LeftMotor.stop(vex::brakeType::brake);
+    LeftMotor2.stop(vex::brakeType::brake);
+    RightMotor.stop(vex::brakeType::brake);
+    RightMotor2.stop(vex::brakeType::brake);
+    Flipper1.spin(vex::directionType::fwd, 60, vex::velocityUnits::pct);
+    Flipper2.spin(vex::directionType::fwd, 60, vex::velocityUnits::pct);
+    vex::task::sleep(num);
+}
+
 //Robot drives backwards for num milliseconds.
 void bdrive (int num)
 {
@@ -288,6 +300,8 @@ void brakeIt()
 
  void autonomous( void ) {
 
+//Red Side Auton
+/*
 //Deploy
 trayForward(1000);
 shortBrake();
@@ -311,12 +325,47 @@ shortBrake();
 rturnNum(320);
 shortBrake();
 //Robot moves toward stacking zone
-fdrive(320);
+fdrive(305);
 shortBrake();
 //deload function
 trayForward(2000);
 shortBrake();
-brakeouttake(750);
+brakeouttslow(1000);
+shortBrake();
+bdriveoutt(1000);
+shortBrake();
+*/
+//Blue Side Auton
+
+//Deploy
+trayForward(1000);
+shortBrake();
+armsUpFast(950);
+shortBrake();
+armsDown(800);
+shortBrake();
+trayBackward(1000);
+shortBrake();
+armsDown(200);
+shortBrake();
+//Robot drives forward and intakes cubes
+fdriveintake(1500);
+shortBrake();
+brakeintake(700);
+shortBrake();
+//Robot drives back to the stacking zone
+bdriveintake(900);
+shortBrake();
+//Robot turns towards stacking zone
+lturnNum(345);
+shortBrake();
+//Robot moves toward stacking zone
+fdrive(305);
+shortBrake();
+//deload function
+trayForward(2000);
+shortBrake();
+brakeouttslow(1000);
 shortBrake();
 bdriveoutt(1000);
 shortBrake();

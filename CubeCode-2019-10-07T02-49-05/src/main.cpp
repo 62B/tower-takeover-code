@@ -38,7 +38,7 @@
  using namespace vex;
 
 
-//Robot (all motors) stops for 100 milliseconds.
+//Robot (all motors) stops for 50 milliseconds.
 void shortBrake()
 {
     LeftMotor.stop(vex::brakeType::brake);
@@ -88,7 +88,7 @@ void armsDown(int num){
   vex::task::sleep(num);
 }
 
-//Robot drives forward for num milliseconds.
+//Robot drives forward for num degrees.
 void fdrive (int num)
 {
     LeftMotor.resetRotation();
@@ -101,7 +101,7 @@ void fdrive (int num)
     LeftMotor2.rotateTo(num,vex::rotationUnits::deg,240,vex::velocityUnits::rpm);
 }
 
-//Robot drives forward slowly for num milliseconds.
+//Robot drives forward slowly for num degrees.
 void fdriveslow (int num)
 {
     LeftMotor.resetRotation();
@@ -114,7 +114,7 @@ void fdriveslow (int num)
     LeftMotor2.rotateTo(num,vex::rotationUnits::deg,30,vex::velocityUnits::rpm);
 }
 
-//Robot drives forward while intaking for num milliseconds.
+//Robot drives forward while intaking for num degrees.
 void fdriveintake (int num)
 {
     LeftMotor.resetRotation();
@@ -131,7 +131,7 @@ void fdriveintake (int num)
     Flipper2.rotateTo(num*-2,vex::rotationUnits::deg,240,vex::velocityUnits::rpm);
 }
 
-//Robot drives backwards while intaking for num milliseconds.
+//Robot drives backwards while intaking for num degrees.
 void bdriveintake (int num)
 {
     LeftMotor.resetRotation();
@@ -148,7 +148,7 @@ void bdriveintake (int num)
     Flipper2.rotateTo(num*-2,vex::rotationUnits::deg,240,vex::velocityUnits::rpm);
 }
 
-//Robot drives backwards while intaking for num milliseconds.
+//Robot drives backwards while intaking for num degrees.
 void bdriveouttake (int num)
 {
     LeftMotor.resetRotation();
@@ -165,6 +165,7 @@ void bdriveouttake (int num)
     Flipper2.rotateTo(num*2,vex::rotationUnits::deg,240,vex::velocityUnits::rpm);
 }
 
+//Robot drives backwards, outtakes, and moves the tray back for num milliseconds.
 void bdriveoutt (int num)
 {
     RightMotor.spin(vex::directionType::rev, 360, vex::velocityUnits::pct);
@@ -213,7 +214,7 @@ void brakeouttslow (int num)
     vex::task::sleep(num);
 }
 
-//Robot drives backwards for num milliseconds.
+//Robot drives backwards for num degrees.
 void bdrive (int num)
 {
     LeftMotor.resetRotation();
@@ -265,7 +266,7 @@ void rturnNum (int num)
     RightMotor2.rotateTo(-num,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
 }
 
-//Robot turns left for num milliseconds.
+//Robot turns left for num degrees.
 void lturnNum (int num)
 {
     LeftMotor.resetRotation();

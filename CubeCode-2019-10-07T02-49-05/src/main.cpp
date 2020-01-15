@@ -49,7 +49,7 @@ void shortBrake()
     Flipper2.stop(vex::brakeType::brake);
     Arm.stop(vex::brakeType::brake);
     Tray.stop(vex::brakeType::brake);
-    vex::task::sleep(100);
+    vex::task::sleep(50);
 }
 
 //Moves tray forward for num milliseconds.
@@ -140,12 +140,41 @@ void bdriveintake (int num)
     RightMotor2.resetRotation();
     Flipper1.resetRotation();
     Flipper2.resetRotation();
-    RightMotor.startRotateTo(-num,vex::rotationUnits::deg,80,vex::velocityUnits::rpm);
-    LeftMotor.startRotateTo(-num,vex::rotationUnits::deg,80,vex::velocityUnits::rpm);
-    RightMotor2.startRotateTo(-num,vex::rotationUnits::deg,80,vex::velocityUnits::rpm);
-    LeftMotor2.startRotateTo(-num,vex::rotationUnits::deg,80,vex::velocityUnits::rpm);
+    RightMotor.startRotateTo(-num,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
+    LeftMotor.startRotateTo(-num,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
+    RightMotor2.startRotateTo(-num,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
+    LeftMotor2.startRotateTo(-num,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
     Flipper1.startRotateTo(num*-2,vex::rotationUnits::deg,240,vex::velocityUnits::rpm);
     Flipper2.rotateTo(num*-2,vex::rotationUnits::deg,240,vex::velocityUnits::rpm);
+}
+
+//Robot drives backwards while intaking for num milliseconds.
+void bdriveouttake (int num)
+{
+    LeftMotor.resetRotation();
+    LeftMotor2.resetRotation();
+    RightMotor.resetRotation();
+    RightMotor2.resetRotation();
+    Flipper1.resetRotation();
+    Flipper2.resetRotation();
+    RightMotor.startRotateTo(-num,vex::rotationUnits::deg,40,vex::velocityUnits::rpm);
+    LeftMotor.startRotateTo(-num,vex::rotationUnits::deg,40,vex::velocityUnits::rpm);
+    RightMotor2.startRotateTo(-num,vex::rotationUnits::deg,40,vex::velocityUnits::rpm);
+    LeftMotor2.startRotateTo(-num,vex::rotationUnits::deg,40,vex::velocityUnits::rpm);
+    Flipper1.startRotateTo(num*2,vex::rotationUnits::deg,240,vex::velocityUnits::rpm);
+    Flipper2.rotateTo(num*2,vex::rotationUnits::deg,240,vex::velocityUnits::rpm);
+}
+
+void bdriveoutt (int num)
+{
+    RightMotor.spin(vex::directionType::rev, 360, vex::velocityUnits::pct);
+    LeftMotor.spin(vex::directionType::rev, 360, vex::velocityUnits::pct);
+    RightMotor2.spin(vex::directionType::rev, 360, vex::velocityUnits::pct);
+    LeftMotor2.spin(vex::directionType::rev, 360, vex::velocityUnits::pct);
+    Flipper1.spin(vex::directionType::fwd, 120, vex::velocityUnits::pct);
+    Flipper2.spin(vex::directionType::fwd, 120, vex::velocityUnits::pct);
+    Tray.spin(vex::directionType::rev, 120, vex::velocityUnits::pct);
+    vex::task::sleep(num);
 }
 
 //Robot brakes and intakes for num milliseconds.
@@ -157,6 +186,18 @@ void brakeintake (int num)
     RightMotor2.stop(vex::brakeType::brake);
     Flipper1.spin(vex::directionType::rev, 240, vex::velocityUnits::pct);
     Flipper2.spin(vex::directionType::rev, 240, vex::velocityUnits::pct);
+    vex::task::sleep(num);
+}
+
+//Robot brakes and outtakes for num milliseconds.
+void brakeouttake (int num)
+{
+    LeftMotor.stop(vex::brakeType::brake);
+    LeftMotor2.stop(vex::brakeType::brake);
+    RightMotor.stop(vex::brakeType::brake);
+    RightMotor2.stop(vex::brakeType::brake);
+    Flipper1.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
+    Flipper2.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
     vex::task::sleep(num);
 }
 
@@ -199,7 +240,7 @@ void lturn ()
     RightMotor2.rotateTo(295,vex::rotationUnits::deg,120,vex::velocityUnits::rpm);
 }
 
-//Robot turns right for num milliseconds.
+//Robot turns right for num degrees.
 void rturnNum (int num)
 {
     LeftMotor.resetRotation();
@@ -250,9 +291,9 @@ void brakeIt()
 //Deploy
 trayForward(1000);
 shortBrake();
-armsUpFast(1000);
+armsUpFast(950);
 shortBrake();
-armsDown(750);
+armsDown(800);
 shortBrake();
 trayBackward(1000);
 shortBrake();
@@ -264,21 +305,21 @@ shortBrake();
 brakeintake(700);
 shortBrake();
 //Robot drives back to the stacking zone
-bdriveintake(1000);
+bdriveintake(900);
 shortBrake();
 //Robot turns towards stacking zone
-rturnNum(375);
+rturnNum(320);
 shortBrake();
 //Robot moves toward stacking zone
-trayForward(50);
+fdrive(320);
 shortBrake();
-fdrive(150);
-shortBrake();
-
-
-
 //deload function
-
+trayForward(2000);
+shortBrake();
+brakeouttake(750);
+shortBrake();
+bdriveoutt(1000);
+shortBrake();
 
 }
  
